@@ -27,6 +27,7 @@ def get_web_page(url):
      print(e)
 
 
+
 def save_html_in_a_file(text):
     
     try:
@@ -42,6 +43,8 @@ def save_html_in_a_file(text):
 if arguments.http_server:
 
     web_html_text= get_web_page()
+    if(web_html_text==None):
+        pass
     save_html_in_a_file(web_html_text)
 
     subprocess.run('python -m http.server -d webpage.html'.split())
