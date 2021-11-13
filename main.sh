@@ -22,4 +22,8 @@ function check_python_version {
     fi
 }
 
-check_pip3_version
+function check_the_system_versions_requirements {
+    check_python_version
+    check_pip3_version
+    check_virtualenv_version
+}
