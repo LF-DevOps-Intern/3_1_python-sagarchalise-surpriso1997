@@ -22,8 +22,67 @@ function check_python_version {
     fi
 }
 
+function create_and_activate_virtual_env {
+
+    virtualenv venv
+
+    source ./venv/bin/activate
+
+    pip install -r requirements.txt
+
+}
+
+function dispaly_help_messages_if_no_args_parsed() {
+    if [[ "$#" == 0 || "$1"=="--help" || "$1"=="-h" ]]; then
+        echo -ne "\n\n"
+        echo -ne "description:\n"
+        echo -ne "\n\n"
+        echo -ne "\t --url \t\tURL to the remote file\n"
+        echo -ne "\t --server for serving the remote file using python http server"
+        echo -ne "\n\n"
+
+        exit 0
+    fi
+
+}
+
+# function parse_the_arguments() {
+#     url=${var:-value}
+#     echo "$#"
+
+#     #  looping through the arguments while the length of arguements is greater than 0
+#     while [[ "$#" -gt 0 ]]; do
+#         args="$1"
+#         case "$args" in
+#         #  case where argument is either -u or --url
+#         -u | --url)
+#             echo "Parsing the url arguments "
+#             url=$2
+#             shift
+#             shift
+#             echo "$url"
+#             ;;
+#             # case where aggumetn --http_server
+#         --http_server)
+#             shift
+#             ;;
+#             #  default case
+#         *)
+#             echo "Invalid Arguments"
+#             exit 0
+#             ;;
+#         esac
+
+#     done
+
+# }
+
 function check_the_system_versions_requirements {
     check_python_version
     check_pip3_version
     check_virtualenv_version
+    create_and_activate_virtual_env
+
+    dispaly_help_messages_if_no_args_parsed
+
 }
