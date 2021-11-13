@@ -32,13 +32,12 @@ function create_and_activate_virtual_env {
 
 }
 
-function dispaly_help_messages_if_no_args_parsed() {
+function dispaly_help_messages_if_no_args_parsed {
     if [[ "$#" == 0 || "$1"=="--help" || "$1"=="-h" ]]; then
         echo -ne "\n\n"
         echo -ne "description:\n"
         echo -ne "\n\n"
-        echo -ne "\t --url \t\tURL to the remote file\n"
-        echo -ne "\t --server for serving the remote file using python http server"
+        echo -ne "\t --url or -u  \t\t URL to the remote file\n"
         echo -ne "\n\n"
 
         exit 0
@@ -81,8 +80,17 @@ function check_the_system_versions_requirements {
     check_python_version
     check_pip3_version
     check_virtualenv_version
-    create_and_activate_virtual_env
-
-    dispaly_help_messages_if_no_args_parsed
 
 }
+
+function startup {
+
+    check_the_system_versions_requirements
+
+    create_and_activate_virtual_env
+
+    python3 main.py
+
+}
+
+startup"$@"
