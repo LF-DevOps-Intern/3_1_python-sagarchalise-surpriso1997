@@ -2,6 +2,7 @@
 import subprocess
 import requests
 import argparse
+from os.path import exists
 
 parser = argparse.ArgumentParser("This cli program dowloads a web page from the provided arguments")
 
@@ -17,10 +18,13 @@ arguments = parser.parse_args()
 
 
 def get_web_page(url):
-    try:
-     response = requests.get(url, timeout=10).text
 
-     return response
+    """ Gets the html file of the webpage from given url argument"""
+    try:
+        print("fetching web page data ")
+        response = requests.get(url, timeout=10).text
+
+        return response
     except Exception as e: 
         
      print("An error occured while fetching the web page:\n")
@@ -29,7 +33,9 @@ def get_web_page(url):
 
 
 def save_html_in_a_file(text):
-    
+
+    """ Saves the provided string (text) to a file named webpage.html """
+
     try:
         file_created= open("webpage.html", "w+")
         file_created.write(text)
@@ -43,10 +49,22 @@ def save_html_in_a_file(text):
 if arguments.http_server:
 
     web_html_text= get_web_page()
+
+    # If an eception occured while fetching web page the web_html_text will have no value 
+    # pass if there is no value in it
     if(web_html_text==None):
         pass
-    save_html_in_a_file(web_html_text)
 
+
+    save_html_in_a_file(web_html_text)
+    
+
+    file_exists= exists("./webpage.html")
+
+    if(file_exists!=True):
+        pass
+
+    # serving the html file in subprocess 
     subprocess.run('python -m http.server -d webpage.html'.split())
 
 else:
